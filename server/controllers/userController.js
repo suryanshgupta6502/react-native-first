@@ -1,6 +1,5 @@
-const { passcompare } = require("../helpers/bcrypt");
-const { hashpass } = require("../helpers/bcrypt");
-const jwt=require("jsonwebtoken");
+const { hashpass, passcompare } = require("../helpers/bcrypt");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const model = require("../models/userModel")
 
@@ -18,7 +17,7 @@ const registerController = async (req, res) => {
         const hashedpass = await hashpass(pass);
         console.log("hashed pass" + hashedpass);
 
-        const user = await model({ name, email, pass:hashedpass }).save();
+        const user = await model({ name, email, pass: hashedpass }).save();
 
         res.status(200).send({
             success: true,
@@ -36,6 +35,7 @@ const registerController = async (req, res) => {
 };
 
 const loginController = async (req, res) => {
+    console.log(req.body);
 
     try {
         const { email, pass } = req.body
@@ -55,11 +55,11 @@ const loginController = async (req, res) => {
             })
         }
 
-        // const match = await passcompare(pass, user.pass);
-        const match = await bcrypt.compare(pass, user.pass).then((result) => {
-            console.log(result +"of compare");
-            return result;
-        });
+        var match = await passcompare(pass, user.pass);
+        // const match = await bcrypt.compare(pass, user.pass).then((result) => {
+        //     console.log(result +"of compare");
+        //     return result;
+        // });
 
         console.log(pass + " " + user.pass);
         console.log("match " + match);
@@ -72,7 +72,7 @@ const loginController = async (req, res) => {
             })
         }
 
-        var token = jwt.sign({ token: user.id }, 'shhhhh',{expiresIn:"7d"});
+        var token = jwt.sign({ token: user.id }, 'shhhhh', { expiresIn: "7d" });
         // console.log(token);
 
         res.status(200).send({
@@ -92,6 +92,38 @@ const loginController = async (req, res) => {
 
 }
 
+const userUpdate = async (req, res) => {
+
+    try {
+
+        const { name, pass, email } = req.body;
+
+        const user = model.findOne({ email })
+        if (!user) {
+            res.send(400).send({
+                message: "user not fount please register"
+            })
+        }
+
+        if (pass && pass < 6) {
+            res.status(500).send({
+                success: false,
+                message: "ass must be greate then 6"
+            })
+        }
+        const hashedpass = pass ? hashpass(pass) : undefined
 
 
-module.exports = { registerController, loginController };
+    }
+    catch (error) {
+        console.log(error.message);
+        res.status(500).send({
+            success: true,
+            message: "error in user update"
+        })
+    }
+
+}
+
+
+module.exports = { registerController, loginController, userUpdate };

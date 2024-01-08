@@ -1,8 +1,10 @@
 const mongoose = require("mongoose")
+require('dotenv').config();
 
-const url = "mongodb+srv://Surya:Surya@cluster0.yenhx0h.mongodb.net/reactnative"
+// const url = process.env.MONGO_URI
 
-const connectdb = mongoose.connect(url)
+
+const connectdb = mongoose.connect(process.env.MONGO_URI)
     .then((data) => {
         console.log("connected");
         // console.log(data)

@@ -5,7 +5,7 @@ const connectdb = require("./config/db");
 const model = require("./models/userModel");
 
 const app = express();
-
+require('dotenv').config();
 // Corrected: Call connectdb function
 connectdb;
 model;
