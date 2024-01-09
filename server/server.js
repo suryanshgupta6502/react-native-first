@@ -18,6 +18,7 @@ app.use(cors());
 app.use(morgan("dev"));
 
 app.use('/', require("./routes/userRoute"));
+app.use('/', require("./routes/postsRoute"));
 
 // Corrected: Add a callback to the listen method to handle errors and log success
 const PORT = 3000;
