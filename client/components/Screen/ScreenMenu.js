@@ -17,14 +17,14 @@ const ScreenMenu = () => {
 
     const stack = createNativeStackNavigator();
     return (
-        <stack.Navigator initialRouteName='Home' >
+        <stack.Navigator initialRouteName='Account' >
             {userAuthentication ? (
                 <>
 
+                    <stack.Screen name='Account' component={Account} options={{ headerRight: () => <HeaderMenu /> }} />
                     <stack.Screen name='Home' component={Home} options={{ title: "Full Stack App", headerRight: () => <HeaderMenu /> }} />
-                    <stack.Screen name='Post' component={Post} options={ {headerRight: () => <HeaderMenu /> }} />
-                    <stack.Screen name='About' component={About} options={ {headerRight: () => <HeaderMenu /> }} />
-                    <stack.Screen name='Account' component={Account} options={ {headerRight: () => <HeaderMenu /> }} />
+                    <stack.Screen name='Post' component={Post} options={{ headerRight: () => <HeaderMenu /> }} />
+                    <stack.Screen name='About' component={About} options={{ headerRight: () => <HeaderMenu /> }} />
                 </>) : (
                 <>
                     {/* <stack.Screen name='Home' component={Home} options={{ title: "Full Stack App",headerRight:()=><HeaderMenu/> }} /> */}

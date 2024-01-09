@@ -6,7 +6,7 @@ import {useNavigation, useRoute} from "@react-navigation/native"
 const FooterMenu = () => {
 
     const route=useRoute();
-    console.log(route);
+    // console.log(route);
 
     const navigator=useNavigation();
 

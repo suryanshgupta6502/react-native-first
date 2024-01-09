@@ -15,4 +15,6 @@ stack.screen
 import AsyncStorage from "@react-native-async-storage/async-storage"
 to store context data in our local system like chrome or in mobile phone
 
-using useroute for checking route which is activef 
+using useroute for checking route which is activef
+
+here axios is used to send and recieve data 

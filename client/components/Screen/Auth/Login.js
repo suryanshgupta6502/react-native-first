@@ -55,7 +55,7 @@ const Login = ({ navigation }) => {
             <Text style={styles.head}>LOGIN</Text>
 
             <Input
-                imputMode="email-address"
+                inputMode="email-address"
                 input="Email"
                 value={email}
                 // autoComplete="email"

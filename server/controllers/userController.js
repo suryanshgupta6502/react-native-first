@@ -98,7 +98,7 @@ const userUpdate = async (req, res) => {
 
         const { name, pass, email } = req.body;
 
-        const user = model.findOne({ email })
+        const user = await model.findOne({ email })
         if (!user) {
             res.send(400).send({
                 message: "user not fount please register"
@@ -108,11 +108,20 @@ const userUpdate = async (req, res) => {
         if (pass && pass < 6) {
             res.status(500).send({
                 success: false,
-                message: "ass must be greate then 6"
+                message: "pass must be greate then 6"
             })
         }
-        const hashedpass = pass ? hashpass(pass) : undefined
+        const hashedpass = pass ? await hashpass(pass) : undefined
+        const updateduser =await model.findOneAndUpdate({email},{
+            name:name || user.name,
+            pass:hashedpass|| user.pass
+        },{new:true})
 
+        res.status(200).send({
+            success:true,
+            message:"profile updated please login",
+            updateduser
+        })
 
     }
     catch (error) {
