@@ -7,15 +7,17 @@ import axios from "axios"
 const Account = () => {
 
     const [state,setstate] = useContext(AuthContext)
+    const {token}=state;
     const [name, setname] = useState(state?.user.name)
     const [email, setemail] = useState(state?.user.email)
-    const [pass, setpass] = useState(state?.user.pass)
+    const [pass, setpass] = useState()
 
     const updatedetails =async () => {
         try {
             const { data } = await axios.put("http://192.168.0.207:3000/user-update",{
                 name,email,pass
-            },)
+            })
+            
             console.log("without parse",data);
             const ud=JSON.stringify(data)
             console.log("with json",ud);
@@ -44,15 +46,15 @@ const Account = () => {
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.inputtext}>Email:</Text>
-                    <TextInput style={styles.inputbox} value={email} editable={false} />
+                    <TextInput style={styles.inputbox} value={email} readOnly />
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.inputtext}>Password:</Text>
-                    <TextInput style={styles.inputbox} secureTextEntry={true} value={pass} onChangeText={(text) => setpass(text)} />
+                    <TextInput style={styles.inputbox} textContentType='password' secureTextEntry={true} value={pass} onChangeText={(text) => setpass(text)} />
                 </View>
                 <View style={styles.input}>
                     <Text style={styles.inputtext}>Role</Text>
-                    <TextInput style={styles.inputbox} value={state?.user.role} editable={false} />
+                    <TextInput style={styles.inputbox} value={state?.user.role} readOnly />
                 </View>
 
                 <View style={{ alignItems: "center" }}>

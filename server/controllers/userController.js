@@ -1,7 +1,14 @@
 const { hashpass, passcompare } = require("../helpers/bcrypt");
-const jwt = require("jsonwebtoken");
+const jwttoken = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const model = require("../models/userModel")
+const model = require("../models/userModel");
+var { expressjwt: jwt } = require("express-jwt");
+
+
+const requiresing = jwt({
+    secret: process.env.SECRET,
+    algorithms: ["HS256"]
+})
 
 const registerController = async (req, res) => {
     try {
@@ -33,6 +40,7 @@ const registerController = async (req, res) => {
         });
     }
 };
+
 
 const loginController = async (req, res) => {
     console.log(req.body);
@@ -72,7 +80,7 @@ const loginController = async (req, res) => {
             })
         }
 
-        var token = jwt.sign({ token: user.id }, 'shhhhh', { expiresIn: "7d" });
+        var token = jwttoken.sign({ token: user.id }, process.env.SECRET, { expiresIn: "7d" });
         // console.log(token);
 
         res.status(200).send({
@@ -112,14 +120,14 @@ const userUpdate = async (req, res) => {
             })
         }
         const hashedpass = pass ? await hashpass(pass) : undefined
-        const updateduser =await model.findOneAndUpdate({email},{
-            name:name || user.name,
-            pass:hashedpass|| user.pass
-        },{new:true})
+        const updateduser = await model.findOneAndUpdate({ email }, {
+            name: name || user.name,
+            pass: hashedpass || user.pass
+        }, { new: true })
 
         res.status(200).send({
-            success:true,
-            message:"profile updated please login",
+            success: true,
+            message: "profile updated please login",
             updateduser
         })
 
@@ -135,4 +143,4 @@ const userUpdate = async (req, res) => {
 }
 
 
-module.exports = { registerController, loginController, userUpdate };
+module.exports = { requiresing, registerController, loginController, userUpdate };

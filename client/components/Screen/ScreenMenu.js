@@ -13,6 +13,7 @@ import Account from './Account';
 const ScreenMenu = () => {
 
     const [state] = useContext(AuthContext)
+    const token=state?.token
     const userAuthentication = state?.user && state?.token;
 
     const stack = createNativeStackNavigator();
