@@ -1,24 +1,28 @@
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import FooterMenu from './Common/FooterMenu'
 import axios from 'axios'
+import { PostContext } from '../../context/postsContext'
 
 const Post = ({ navigation }) => {
+
+    const [posts, setposts] = useContext(PostContext);
 
     const [title, settitle] = useState("")
     const [discription, setdisc] = useState("")
 
-    const handlepost = async() => {
+    const handlepost = async () => {
 
         // console.log(`title is ${title} and discription is ${discription}`)
 
         try {
-            if (!title||!discription) {
+            if (!title || !discription) {
                 // alert("no")
             }
-            
-            const { data } = await axios.post("http://192.168.0.207:3000/new-post",{title,discription});
+
+            const { data } = await axios.post("http://192.168.0.207:3000/new-post", { title, discription });
             console.log(data);
+            setposts([...posts, data?.posts]);
             alert(data?.message);
             navigation.navigate("Home");
 

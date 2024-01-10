@@ -13,12 +13,12 @@ import Account from './Account';
 const ScreenMenu = () => {
 
     const [state] = useContext(AuthContext)
-    const token=state?.token
+    const token = state?.token
     const userAuthentication = state?.user && state?.token;
 
     const stack = createNativeStackNavigator();
     return (
-        <stack.Navigator initialRouteName='Post' >
+        <stack.Navigator initialRouteName='Home' >
             {userAuthentication ? (
                 <>
 
