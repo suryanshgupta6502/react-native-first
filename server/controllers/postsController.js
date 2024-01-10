@@ -5,10 +5,10 @@ const createpost= async(req,res)=>{
 
         const {title,discription}=req.body;
 
-        if(!title,!discription){
-            res.status(500).send({
+        if(!title||!discription){
+            return res.status(500).send({
                 success:false,
-                message:"tile and siscription both require"
+                message:"tile and discription both require"
             })
         }
 
@@ -16,11 +16,11 @@ const createpost= async(req,res)=>{
             title,
             discription,
             postedBy:req.auth.token
-        }).save()
+        }).save();
         
         res.status(201).send({
             success:true,
-            message:"user added sucessflly",
+            message:"post added sucessflly",
             post
         })
         // console.log(req);

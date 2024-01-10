@@ -18,7 +18,7 @@ const ScreenMenu = () => {
 
     const stack = createNativeStackNavigator();
     return (
-        <stack.Navigator initialRouteName='Account' >
+        <stack.Navigator initialRouteName='Post' >
             {userAuthentication ? (
                 <>
 
