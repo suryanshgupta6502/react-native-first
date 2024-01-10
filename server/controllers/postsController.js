@@ -34,4 +34,30 @@ const createpost= async(req,res)=>{
     }
 }
 
-module.exports={createpost}
+
+const getposts=async(req,res)=>{
+
+    try {
+        
+        const posts=await postModel.find()
+        .populate("postedBy"," id name")
+        .sort({createdAt:-1});
+
+        res.status(200).send({
+            success:true,
+            message:"all posts",
+            posts
+        })
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: true,
+            message: "erron in getting posts",
+            posts
+        })
+    }
+}
+
+
+module.exports = { createpost, getposts }
